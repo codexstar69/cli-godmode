@@ -1,6 +1,6 @@
 ---
 name: cli-godmode
-description: Instantly transforms any developer's terminal environment into a 100x God-Tier setup. Performs a comprehensive, read-only system scan (shell configs, aliases, multiplexers, background proxies, Git workflows, and resource bottlenecks) and generates a beautiful, offline, interactive HTML dashboard. Works natively via npx skills, Claude Code, Cursor, Windsurf, Pi, Aider, and any autonomous coding agent.
+description: Instantly transforms any developer's terminal environment into a 100x God-Tier setup. Performs a comprehensive, read-only system scan (shell configs, aliases, multiplexers, background proxies, Git workflows, and resource bottlenecks) and generates a beautiful, offline, interactive HTML dashboard. Works natively via skills.sh (npx skills), Claude Code, Cursor, Windsurf, AMP, Antigravity, Pi, Aider, and 18+ other autonomous coding agents.
 allowed-tools: Bash, Read, Glob, Write, Task
 ---
 

@@ -6,7 +6,7 @@
   <p><i>Instantly transform your local terminal into a 100x elite God-Tier setup</i></p>
 
   <a href="#about">About</a> •
-  <a href="#how-it-works">How it Works</a> •
+  <a href="#supported-agents">Supported Agents</a> •
   <a href="#installation">Installation</a> •
   <a href="#the-dashboard">The Dashboard</a>
 </div>
@@ -17,12 +17,31 @@
 
 **CLI Godmode** isn't just another script—it's an autonomous Developer Experience (DX) engineer that lives inside your AI coding assistant. It scans, audits, and upgrades your entire terminal setup.
 
-Whether you're using Claude Code, Cursor, Windsurf, Aider, or Pi, invoking this skill prompts your AI agent to perform a deep, read-only audit of your machine. It checks your dotfiles, Git configuration, background proxies, CPU hogs, and installed packages, then generates a stunning, offline, interactive HTML dashboard grading your setup and providing exact, copy-pasteable commands to upgrade your workflow.
+Invoking this skill prompts your AI agent to perform a deep, read-only audit of your machine. It checks your dotfiles, Git configuration, background proxies, CPU hogs, and installed packages, then generates a stunning, offline, interactive HTML dashboard grading your setup and providing exact, copy-pasteable commands to upgrade your workflow.
 
 ### Why do you need this?
 Modern development is moving incredibly fast. Legacy tools like `cat`, `grep`, and `ls` have been replaced by rust-based alternatives (`bat`, `rg`, `eza`), shell history is now SQLite-backed (`atuin`), and background services are increasingly complex with local LLM proxies.
 
 **CLI Godmode tells you exactly what you're missing to reach the top 1% of developer setups.**
+
+---
+
+## 🤖 Supported Agents
+
+This skill is designed to be **universal** across the modern AI ecosystem. Through the `skills.sh` registry and standard markdown formatting, it is natively compatible with **18+ coding agents**, including:
+
+- **Claude Code** (Anthropic)
+- **Cursor**
+- **Windsurf** (Codeium)
+- **AMP** (ampcode.com)
+- **Antigravity** (antigravity.google)
+- **Pi** (pi-coding-agent)
+- **Cline / Roo / Trae**
+- **GitHub Copilot**
+- **Goose** (Block)
+- **OpenCode** (opencode.ai)
+- **Droid** (Factory.ai)
+- **Kiro CLI**
 
 ---
 
@@ -51,15 +70,19 @@ Automatically maps your local ports and background proxy services (vital for loc
 
 ## ⚡ Installation (Universal)
 
-This skill is designed to be **universal** across the modern AI ecosystem. It's compatible with any agent that supports the `.md` skill format.
-
 ### Option A: Using `skills.sh` / `npx skills` (Recommended)
-If you use the global skills registry, you can add it directly to your agent:
+If your agent supports the global skills.sh registry (Claude Code, AMP, Antigravity, Cursor, Windsurf, etc.), you can add it directly with one command:
 ```bash
 npx skills add codexstar69/cli-godmode
 ```
 
-### Option B: Claude Code CLI
+### Option B: Pi CLI
+If using the Pi agent framework:
+```bash
+pi add skill cli-godmode --repo https://github.com/codexstar69/cli-godmode
+```
+
+### Option C: Claude Code (Manual)
 Clone the repository directly into your Claude skills directory:
 ```bash
 git clone https://github.com/codexstar69/cli-godmode.git ~/.claude/skills/cli-godmode
@@ -69,15 +92,9 @@ git clone https://github.com/codexstar69/cli-godmode.git ~/.claude/skills/cli-go
 claude -p /path/to/cli-godmode
 ```
 
-### Option C: Cursor / Windsurf / Aider
+### Option D: Cursor / Windsurf / Aider (Manual)
 Simply copy the contents of `SKILL.md` into your project's `.cursorrules`, global agent instructions, or prompt your agent directly:
 *"Read the CLI Godmode instructions from `https://raw.githubusercontent.com/codexstar69/cli-godmode/main/SKILL.md` and execute the audit."*
-
-### Option D: Pi CLI
-If using the Pi agent framework:
-```bash
-pi add skill cli-godmode --repo https://github.com/codexstar69/cli-godmode
-```
 
 ---
 
