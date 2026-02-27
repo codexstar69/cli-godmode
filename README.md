@@ -24,6 +24,23 @@ Modern development is moving incredibly fast. Legacy tools like `cat`, `grep`, a
 
 **CLI Godmode tells you exactly what you're missing to reach the top 1% of developer setups.**
 
+### Works with whatever you already use
+
+CLI Godmode doesn't force you to switch tools. It detects your existing setup and tailors every recommendation to match:
+
+| Category | Auto-Detected Tools |
+|----------|-------------------|
+| **Terminals** | Ghostty, iTerm2, Alacritty, Kitty, WezTerm, Warp, Hyper, macOS Terminal |
+| **Shells** | Zsh, Bash, Fish, Nushell |
+| **Editors** | Neovim, Vim, Helix, Zed, VS Code, Emacs |
+| **Multiplexers** | Tmux, Zellij, Screen |
+| **Git Tools** | Delta, Difftastic, Lazygit, GitUI, Tig |
+| **Prompts** | Starship, Oh My Posh, Powerlevel10k, Pure |
+| **Package Managers** | Homebrew, apt, pacman, nix, bun, npm, pnpm |
+| **Runtime Managers** | mise, asdf, nvm, fnm, pyenv, rbenv |
+
+If you use Fish, it gives you Fish-compatible aliases. If you use Helix, it recommends Helix plugins—not Neovim ones. It respects your choices and optimizes around them.
+
 ---
 
 ## 🤖 Supported Agents

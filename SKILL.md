@@ -10,28 +10,80 @@ You are an elite Developer Experience (DX) Engineer and system performance exper
 
 This skill is designed to self-reason. It does not just blindly run commands; it reads the system's pulse, cross-references dotfiles, and deduces the exact pain points of the user's current workflow.
 
+This skill works regardless of the user's preferred terminal, editor, shell, or OS. It adapts to whatever they already use.
+
 ---
 
 ## Step 1: The Deep System Scan (Silent & Read-Only)
 
-Execute a comprehensive audit of the host machine. Maximize the use of concurrent bash commands or parallel Task agents to minimize wait time:
+Execute a comprehensive audit of the host machine. Maximize the use of concurrent bash commands or parallel Task agents to minimize wait time.
 
-### 1. Shell & Environment Context
-- Read `~/.zshrc`, `~/.bashrc`, `~/.config/fish/config.fish`
+### 1. Detect the User's Environment
+
+Before auditing, detect what the user is running so you can tailor recommendations:
+
+**Terminal Emulator** (check running processes and configs):
+- Ghostty (`~/.config/ghostty/config`)
+- iTerm2 (`~/Library/Preferences/com.googlecode.iterm2.plist`)
+- Alacritty (`~/.config/alacritty/alacritty.toml`)
+- Kitty (`~/.config/kitty/kitty.conf`)
+- WezTerm (`~/.config/wezterm/wezterm.lua`)
+- Warp, Hyper, macOS Terminal
+
+**Shell** (check `$SHELL` or read configs):
+- Zsh (`~/.zshrc`)
+- Bash (`~/.bashrc`, `~/.bash_profile`)
+- Fish (`~/.config/fish/config.fish`)
+- Nushell (`~/.config/nushell/config.nu`)
+
+**Editor** (check config directories):
+- Neovim (`~/.config/nvim/`)
+- Vim (`~/.vimrc`)
+- Helix (`~/.config/helix/config.toml`)
+- Zed (`~/.config/zed/settings.json`)
+- VS Code (`~/.config/Code/` or `~/Library/Application Support/Code/`)
+- Emacs (`~/.emacs.d/`)
+
+**Multiplexer**:
+- Tmux (`~/.tmux.conf`, `~/.config/tmux/tmux.conf`)
+- Zellij (`~/.config/zellij/config.kdl`)
+- Screen (`~/.screenrc`)
+
+**Prompt**:
+- Starship (`~/.config/starship.toml`)
+- Oh My Posh (`~/.config/ohmyposh/`)
+- Powerlevel10k (`~/.p10k.zsh`)
+- Pure (check zsh plugins)
+
+**Runtime Manager**:
+- mise (`~/.config/mise/config.toml`)
+- asdf (`~/.tool-versions`)
+- nvm (`~/.nvm/`)
+- fnm, pyenv, rbenv
+
+**Package Manager**:
+- Homebrew (macOS)
+- apt/dpkg (Debian/Ubuntu)
+- pacman (Arch)
+- nix
+- bun, npm, pnpm, yarn
+
+### 2. Shell & Environment Context
+- Read detected shell config files
 - Analyze aliases, path priorities, custom functions, and Git credentials (`~/.gitconfig`)
 - Check for modern tool integration (e.g., `zoxide`, `fzf`, `starship`)
 
-### 2. Toolchain & Ecosystem
+### 3. Toolchain & Ecosystem
 - Check global package managers: `brew list --formula`, `brew list --cask` (macOS), `apt list --installed` (Linux), `npm -g ls`, `bun pm ls -g`, `mise ls`
 - Audit usage of Rust-based CLI rewrites: `bat`, `eza`, `fd`, `rg`, `sd`, `xh`, `procs`, `btop`, `dust`
-- Multiplexer & Editor config checks: `~/.tmux.conf`, `~/.config/zellij/config.kdl`, `~/.config/nvim/`
+- Check detected multiplexer and editor configs for optimization opportunities
 
-### 3. System Health & Infrastructure (CRITICAL)
+### 4. System Health & Infrastructure (CRITICAL)
 - **CPU Spikes:** `ps -eo pid,pcpu,pmem,comm -r | head -15` (Look for node, python, or extension helpers over 50% CPU)
 - **Port Mapping:** `lsof -iTCP -sTCP:LISTEN -P -n` (Identify local AI proxies, DBs, and dev servers)
-- **Background Services:** `launchctl list | rg -v "com.apple"`, `systemctl --user`
+- **Background Services:** `launchctl list | rg -v "com.apple"` (macOS), `systemctl --user list-units` (Linux)
 
-### 4. Security Posture
+### 5. Security Posture
 - Scan dotfiles (`~/.env`, `.zshenv`, etc.) for hardcoded, plaintext API keys (Anthropic, OpenAI, AWS). *DO NOT log the keys themselves, flag the files.*
 
 ---
@@ -40,13 +92,16 @@ Execute a comprehensive audit of the host machine. Maximize the use of concurren
 
 *DO NOT skip this step.* You must analyze the data gathered against the **CLI Godmode Benchmark** before generating the dashboard.
 
-1. **Synthesize the Workflow:** Based on their config, are they a frontend dev, backend, AI engineer? (e.g., if they have local proxy ports like 8400, 3456 running Claude routers, tailor the advice to AI workflows).
-2. **Identify the Weakest Links:**
+1. **Synthesize the Workflow:** Based on their config, are they a frontend dev, backend, AI engineer? (e.g., if they have local proxy ports like 8400, 3456 running Claude routers, tailor the advice to AI workflows. If they have Rails/Django, tailor to backend).
+2. **Respect Their Choices:** If they use Ghostty, don't recommend switching terminals. If they use Fish, provide Fish-compatible aliases, not Zsh ones. If they use Helix, recommend Helix plugins, not Neovim plugins.
+3. **Identify the Weakest Links:**
    - Are they missing `atuin` (searchable SQLite history)?
    - Are they missing `yazi` (fast terminal file manager)?
    - Are they managing local proxies via raw `launchd` instead of `process-compose`?
-3. **Formulate Fixes:** If PID 94146 is burning 71% CPU, the critical fix is `kill 94146`. If `~/.env.secrets` is plaintext, the fix is 1Password CLI (`op run`).
-4. **Compute Score:** Calculate a Godmode Score (0-100) based on modern tool adoption and system health.
+   - Is their editor missing key plugins (formatters, debuggers, LSP configs)?
+   - Is their terminal missing font ligatures, GPU acceleration, or keybindings?
+4. **Formulate Fixes:** If PID 94146 is burning 71% CPU, the critical fix is `kill 94146`. If `~/.env.secrets` is plaintext, the fix is 1Password CLI (`op run`).
+5. **Compute Score:** Calculate a Godmode Score (0-100) based on modern tool adoption and system health.
 
 ---
 
@@ -62,11 +117,12 @@ Generate a stunning, single-file, interactive HTML dashboard. Save it to `~/cli-
 
 **Sections MUST Include:**
 1. **Hero Header:** A glowing radial progress ring displaying their exact "Godmode Score".
-2. **🔴 Critical Fixes:** Urgent issues found during the scan (runaway CPU, crashed services, plaintext secrets). Be specific to their actual machine.
-3. **🟢 The Arsenal (Missing Tools):** A masonry grid of tools they specifically need (e.g., Atuin, Yazi, Lazydocker, Process-Compose) with direct install commands (`brew install atuin`).
-4. **🔵 Personalized Supercharges:** Copy-pasteable aliases tailored to *their* stack (e.g., if Docker is installed, provide Docker cleanup aliases; if FZF is missing, provide FZF integrations).
-5. **📊 Infrastructure Map:** A visual readout of their listening ports and running background services, mapped beautifully.
-6. **🚀 Godmode Activation:** A master, one-click install script block to download all missing tools at once.
+2. **🖥️ Detected Environment:** Show what terminal, shell, editor, multiplexer, and prompt the user is running. This personalizes the dashboard and proves the scan is tailored to *them*.
+3. **🔴 Critical Fixes:** Urgent issues found during the scan (runaway CPU, crashed services, plaintext secrets). Be specific to their actual machine.
+4. **🟢 The Arsenal (Missing Tools):** A masonry grid of tools they specifically need (e.g., Atuin, Yazi, Lazydocker, Process-Compose) with direct install commands (`brew install atuin`).
+5. **🔵 Personalized Supercharges:** Copy-pasteable aliases tailored to *their* stack and *their* shell (e.g., if Docker is installed, provide Docker cleanup aliases; if FZF is missing, provide FZF integrations). Use Fish syntax if they use Fish, Zsh if they use Zsh, etc.
+6. **📊 Infrastructure Map:** A visual readout of their listening ports and running background services, mapped beautifully.
+7. **🚀 Godmode Activation:** A master, one-click install script block to download all missing tools at once.
 
 ---
 
