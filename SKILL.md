@@ -1,10 +1,10 @@
 ---
-name: god-tier-cli-audit
-description: Runs a 100x God-Tier CLI & System Audit. Scans your dotfiles, shell configs, background processes, installed tools, git setup, and environment to generate a beautiful, interactive, offline HTML dashboard grading your setup and recommending elite-tier terminal workflows. Use when the user wants to speed up their workflow, audit their CLI, or asks "how can I improve my terminal setup?".
+name: cli-godmode
+description: Runs a 100x CLI Godmode & System Audit. Scans your dotfiles, shell configs, background processes, installed tools, git setup, and environment to generate a beautiful, interactive, offline HTML dashboard grading your setup and recommending elite-tier terminal workflows. Use when the user wants to speed up their workflow, audit their CLI, or asks "how can I improve my terminal setup?".
 allowed-tools: Bash, Read, Glob, Write, Task
 ---
 
-# God-Tier CLI & System Audit
+# CLI Godmode & System Audit
 
 You are an elite developer experience (DX) engineer. Your goal is to turn the user's terminal environment into a 100x god-tier setup.
 
@@ -63,4 +63,4 @@ Use the `Write` tool to create `~/cli-audit-dashboard.html`.
 Once the HTML file is written, use the `Bash` tool to open it:
 `open ~/cli-audit-dashboard.html` (macOS) or `xdg-open ~/cli-audit-dashboard.html` (Linux).
 
-Tell the user: "I've completed the deep scan of your machine. Your God-Tier CLI Dashboard is ready and opened in your browser." Give them a 2-3 sentence summary of their biggest bottleneck and the #1 tool they should install.
+Tell the user: "I've completed the deep scan of your machine. Your CLI Godmode Dashboard is ready and opened in your browser." Give them a 2-3 sentence summary of their biggest bottleneck and the #1 tool they should install.

@@ -1,4 +1,4 @@
-# God-Tier CLI Audit Skill for Claude Code
+# CLI Godmode Audit Skill for Claude Code
 
 Turn your terminal environment into a 100x god-tier setup.
 
@@ -29,12 +29,12 @@ The skill will identify exactly what you are missing to achieve a "God-Tier" set
 Install the skill directly using the Claude Code CLI:
 
 ```bash
-claude -p /god-tier-cli-audit
+claude -p /cli-godmode
 ```
 
 *Alternatively, if you use the [Anthropic Skills allowlist](https://github.com/anthropics/claude-code):*
 ```bash
-claude mcp add god-tier-cli-audit
+claude mcp add cli-godmode
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ claude mcp add god-tier-cli-audit
 Simply ask Claude to audit your setup:
 
 ```
-> /god-tier-cli-audit
+> /cli-godmode
 ```
 
 Or just use natural language:
