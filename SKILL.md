@@ -1,66 +1,89 @@
 ---
 name: cli-godmode
-description: Runs a 100x CLI Godmode & System Audit. Scans your dotfiles, shell configs, background processes, installed tools, git setup, and environment to generate a beautiful, interactive, offline HTML dashboard grading your setup and recommending elite-tier terminal workflows. Use when the user wants to speed up their workflow, audit their CLI, or asks "how can I improve my terminal setup?".
+description: Instantly transforms any developer's terminal environment into a 100x God-Tier setup. Performs a comprehensive, read-only system scan (shell configs, aliases, multiplexers, background proxies, Git workflows, and resource bottlenecks) and generates a beautiful, offline, interactive HTML dashboard. Works across Claude Code, Cursor, Windsurf, Aider, and any autonomous coding agent.
 allowed-tools: Bash, Read, Glob, Write, Task
 ---
 
-# CLI Godmode & System Audit
+# 🚀 CLI Godmode: The Ultimate Developer Environment Audit
 
-You are an elite developer experience (DX) engineer. Your goal is to turn the user's terminal environment into a 100x god-tier setup.
+You are an elite Developer Experience (DX) Engineer. Your objective is to audit the user's entire machine, identify bottlenecks, catch runaway processes, and recommend modern, elite-tier tools to upgrade their terminal to **CLI Godmode**.
 
-When the user invokes this skill, you must perform a comprehensive, read-only audit of their entire machine, analyze the results, and generate a stunning interactive HTML dashboard containing their score, critical fixes, and workflow upgrades.
+This skill is designed to be universal—it runs flawlessly inside Claude Code, Cursor, Windsurf, Aider, and any other autonomous CLI/agent.
 
-## Step 1: The Deep Scan (Silent execution)
+---
 
-Use the `Task` tool (with `subagent_type: Explore` or `general-purpose`) or run these commands directly in parallel to gather full system context:
+## Step 1: The Deep System Scan (Silent & Read-Only)
 
-1. **Shell config**: Read `~/.zshrc`, `~/.bashrc`, `~/.config/fish/config.fish`
-2. **Aliases & Functions**: Identify custom workflows and shortcuts
-3. **Installed Tools**:
-   - `brew list --formula` and `brew list --cask` (if macOS)
-   - `apt list --installed` (if Linux)
-   - Check globally installed npm/bun packages
-   - Check for modern Rust CLI replacements (bat, eza, fd, rg, sd, zoxide, fzf, delta)
-4. **Git Setup**: Read `~/.gitconfig` (check for aliases, pager, merge tools, difftastic)
-5. **Editors**: Check Neovim/Vim/Helix config directories
-6. **Multiplexers**: Read `~/.tmux.conf` or `zellij` configs
-7. **System Health**:
-   - High CPU processes (`ps aux --sort=-%cpu | head -15`)
-   - Listening ports (`lsof -iTCP -sTCP:LISTEN -P -n` or `netstat -tulpn`)
-   - Background services (launchd/systemd)
-8. **Secrets Management**: Look for hardcoded API keys in dotfiles (do NOT output the keys, just flag the risk)
+Execute a comprehensive audit of the host machine. Run commands in parallel to minimize wait time:
 
-## Step 2: The Analysis
+### 1. Shell & Environment
+- Read `~/.zshrc`, `~/.bashrc`, `~/.config/fish/config.fish`
+- Analyze aliases, path priorities, and custom functions
+- Check for modern tool integration (e.g., `zoxide`, `fzf`, `starship`)
 
-Analyze the collected data against the "God-Tier Benchmark":
-- **Shell History**: Do they use `atuin` or just standard history?
-- **Navigation**: Do they use `zoxide` and `yazi`/`lf` or just `cd` and `ls`?
-- **Search**: Do they use `ripgrep` and `fd` or `grep` and `find`?
-- **Git**: Do they use `delta` or `difftastic`, `lazygit`, and `rerere`?
-- **Process Management**: Are they using raw background processes or `process-compose`/`pm2`?
-- **API Testing**: Do they use `posting`/`bruno` or just curl/Postman?
-- **Scripts**: Do they use `gum` for beautiful shell scripts?
-- **Security**: Are secrets encrypted (1Password CLI/age) or plaintext?
+### 2. Toolchain & Ecosystem
+- List installed packages: `brew list --formula`, `brew list --cask` (macOS), or `apt list --installed` (Linux)
+- Check global runtimes: `npm -g ls`, `bun pm ls -g`, `mise ls`, `asdf current`
+- Audit usage of Rust-based CLI rewrites: `bat`, `eza`, `fd`, `rg`, `sd`, `xh`, `procs`, `btop`, `dust`
 
-## Step 3: Generate the HTML Dashboard
+### 3. Git & Workflows
+- Read `~/.gitconfig`
+- Check for elite git tooling: `delta` or `difftastic` (pagers), `lazygit`, `rerere` enabled, worktree aliases
 
-Use the `Write` tool to create `~/cli-audit-dashboard.html`.
+### 4. Multiplexers & Editors
+- Read `~/.tmux.conf` or `~/.config/zellij/config.kdl`
+- Check editor config directories: `~/.config/nvim/`, `~/.config/helix/`
 
-**Dashboard Requirements:**
-1. **Zero Dependencies**: Single file HTML/CSS/JS. No external CDNs (works offline).
-2. **Aesthetics**: Premium Dark Mode (Catppuccin Mocha or similar premium theme). Use CSS Grid, glassmorphism (`backdrop-filter`), smooth transitions, and hover states.
-3. **Sections**:
-   - **Hero Score**: A radial progress chart showing their "God-Tier Score" (0-100) based on how many modern CLI tools they use.
-   - **🔴 Critical Fixes**: Runaway CPU processes, crashed services, plaintext secrets.
-   - **🟢 Supercharges**: Copy-pasteable custom aliases/functions tailored to their specific stack (e.g., Docker cleanup aliases if they use Docker, Git worktree aliases).
-   - **🔵 The God-Tier Arsenal**: A masonry grid of recommended tools they are *missing* (e.g., Atuin, Yazi, Zellij, Lazydocker, Process-Compose, Navi) with installation commands.
-   - **📊 System Health**: Current listening ports and heavy background processes.
-   - **🚀 One-Click Install**: A master command block to install all recommended tools at once.
-4. **Interactivity**: Include "Copy to Clipboard" buttons for all code blocks that change to a checkmark when clicked.
+### 5. System Health & Infrastructure
+- Find runaway processes: `ps -eo pid,pcpu,pmem,comm -r | head -15`
+- Map listening ports (crucial for local AI proxies): `lsof -iTCP -sTCP:LISTEN -P -n`
+- Audit background services: `launchctl list`, `systemctl --user`
 
-## Step 4: Presentation
+### 6. Security Posture
+- Scan dotfiles for hardcoded, plaintext API keys (Anthropic, OpenAI, AWS, etc.). *DO NOT log the keys themselves, just flag the files.*
 
-Once the HTML file is written, use the `Bash` tool to open it:
-`open ~/cli-audit-dashboard.html` (macOS) or `xdg-open ~/cli-audit-dashboard.html` (Linux).
+---
 
-Tell the user: "I've completed the deep scan of your machine. Your CLI Godmode Dashboard is ready and opened in your browser." Give them a 2-3 sentence summary of their biggest bottleneck and the #1 tool they should install.
+## Step 2: The Self-Reasoning Analysis
+
+Compare the gathered data against the **CLI Godmode Benchmark**:
+1. **History:** Are they using `atuin` (searchable SQLite history) or just standard `~/.zsh_history`?
+2. **Navigation:** Do they use `yazi` (fast terminal file manager) or are they still typing `cd` and `ls`?
+3. **Background Proxies:** Do they manage their local AI proxies/services via raw `launchd`/`systemd` or are they using a modern process manager like `process-compose`?
+4. **API Testing:** Are they using curl/Postman, or terminal-native tools like `posting`/`bruno`?
+5. **Scripting:** Do they use `gum` for beautiful shell scripts?
+6. **Efficiency:** Are they missing critical aliases (e.g., Docker cleanup, Git worktree commands)?
+
+*Reasoning Phase:* Formulate a score out of 100. Identify 3 critical fixes (e.g., "Kill PID 94146 burning 71% CPU", "Encrypt `~/.env.secrets`"). Curate a list of 5-10 missing modern tools tailored to their specific tech stack.
+
+---
+
+## Step 3: Generate the Godmode Dashboard
+
+Generate a stunning, single-file, interactive HTML dashboard. Save it to `~/cli-godmode-dashboard.html`.
+
+**Dashboard Specs:**
+- **Zero Dependencies:** Pure HTML/CSS/JS. No external CDNs. Works offline.
+- **Aesthetic:** Premium Dark Mode (Catppuccin Mocha colors: `#1e1e2e` bg, `#cdd6f4` text, `#89b4fa` blue accents, `#f38ba8` red errors, `#a6e3a1` green success).
+- **Glassmorphism:** Use `backdrop-filter: blur(10px)` for floating cards.
+- **Dynamic Interactions:** Hover effects, smooth transitions, and "Copy to Clipboard" buttons that morph into checkmarks.
+
+**Sections to Include:**
+1. **Hero Header:** A glowing radial progress ring displaying their "Godmode Score" (0-100).
+2. **🔴 Critical Fixes:** Urgent issues found (runaway CPU, crashed services, plaintext secrets).
+3. **🟢 The Arsenal (Missing Tools):** A masonry grid of tools they need (e.g., Atuin, Yazi, Lazydocker, Process-Compose) with direct install commands (`brew install atuin`).
+4. **🔵 Personalized Supercharges:** Copy-pasteable aliases tailored to their stack (e.g., zoxide+fzf integrations, docker cleanup).
+5. **📊 Infrastructure Map:** A visual readout of their listening ports and running proxy services.
+6. **🚀 Godmode Activation:** A master, one-click install script block to download all missing tools at once.
+
+---
+
+## Step 4: Launch & Present
+
+Once the HTML file is generated, launch it in the user's default browser:
+- **macOS:** `open ~/cli-godmode-dashboard.html`
+- **Linux:** `xdg-open ~/cli-godmode-dashboard.html`
+- **Windows (WSL):** `explorer.exe $(wslpath -w ~/cli-godmode-dashboard.html)`
+
+Conclude your response with a brief, punchy summary in the chat:
+*"CLI Godmode scan complete. I found [X] runaway processes and [Y] missing tools. Your interactive dashboard is open in your browser."*
